@@ -1,0 +1,50 @@
+* {
+  box-sizing: border-box;
+}
+
+.wrapper {
+  display: flex;
+}
+
+.side-bar {
+  width: 300px;
+  height: 100vh;
+  background-color: #253141;
+}
+
+.side-bar-header {
+  /* width: 300px; */
+  height: 100px;
+  /* background-color: #253141; */
+  padding: 0 20px;
+}
+
+.rooms {
+  /* width: 300px; */
+  height: calc(100vh - 100px);
+  background-color: #2f3e51;
+  padding: 0 20px;
+}
+
+.chat {
+  width: calc(100vw - 300px);
+  background-color: #ffffff;
+}
+
+.chat-header {
+  height: 100px;
+  /* background-color: #ffffff; */
+  padding: 0 40px;
+}
+
+.messages {
+  height: calc(100vh - 100px - 90px);  /*コード見返したときにわかるように、100px,90pxをそれぞれ引くように記述する */
+  background-color: #fafafa;
+  padding: 46px 40px 0;
+}
+
+.form {
+  height: 90px;
+  background-color: #dddddd;
+  padding: 20px 40px;
+}
