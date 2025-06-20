@@ -90,6 +90,8 @@ public class UserController {
 
   // ユーザー情報更新処理（ユーザー情報編集画面）
   @PostMapping("/users/{userId}")
+  // @ModelAttributeはリクエストで送られてきた情報をJavaオブジェクトに設定するアノテーション
+  // userはビュー側のフォームで呼び出すときの名前
   public String updateUser(@PathVariable("userId") Integer userId, @ModelAttribute("user") UserEditForm userEditForm, Model model) {
     // 画面から送られてきた情報をセット
     UserEntity user = userRepository.findById(userId);
