@@ -26,4 +26,11 @@ public interface UserRepository {
   // ユーザー情報更新
   @Update("UPDATE users SET name = #{name}, email = #{email} WHERE id = #{id}")
   void update(UserEntity user);
+
+  // メールアドレスの重複チェックで用いるSQL
+  @Select("SELECT EXISTS(SELECT 1 FROM users WHERE email = #{email})")
+  boolean existsByEmail(String email);
+
+  @Select("SELECT COUNT(*) > 0 FROM users WHERE email = #{email} AND id != #{userId}")
+  boolean existsByEmailExcludingCurrent(String email, Integer userId);
 }

@@ -37,6 +37,7 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	implementation 'org.springframework.boot:spring-boot-starter-security'  //追加　Spring Security
   implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'  //追加  Thymeleaf
+	implementation 'org.springframework.boot:spring-boot-starter-validation'  //追加  バリデーション
 }
 
 tasks.named('test') {

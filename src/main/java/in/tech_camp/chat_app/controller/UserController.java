@@ -1,7 +1,13 @@
 package in.tech_camp.chat_app.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +20,7 @@ import in.tech_camp.chat_app.form.UserEditForm;
 import in.tech_camp.chat_app.form.UserForm;
 import in.tech_camp.chat_app.repository.UserRepository;
 import in.tech_camp.chat_app.service.UserService;
+import in.tech_camp.chat_app.validation.ValidationOrder;
 import lombok.AllArgsConstructor;
 
 
@@ -35,7 +42,25 @@ public class UserController {
   // サインアップの画面からのリクエストを受け付け、ユーザーの登録を行う
   // ルーティングはSecurityConfig.javaの記述に合わせて/userのPOSTリクエスト
   @PostMapping("/user")
-  public String createUser(@ModelAttribute("userForm") UserForm userForm, Model model) {
+  // public String createUser(@ModelAttribute("userForm") UserForm userForm, Model model) {
+  public String createUser(@ModelAttribute("userForm") @Validated(ValidationOrder.class) UserForm userForm, BindingResult result, Model model) {
+    userForm.validatePasswordConfirmation(result);
+    // 登録済みのメールアドレスで内科の重複チェック
+    if (userRepository.existsByEmail(userForm.getEmail())) {
+      result.rejectValue("email", "null", "Email already exists");
+    }
+
+    // バリデーションチェックでエラーになった場合はサインアップ画面を再表示
+    if (result.hasErrors()) {
+      List<String> errorMessages = result.getAllErrors().stream()
+              .map(DefaultMessageSourceResolvable::getDefaultMessage)
+              .collect(Collectors.toList());
+
+      model.addAttribute("errorMessages", errorMessages);
+      model.addAttribute("userForm", userForm);
+      return "users/signUp";
+    }
+
     // 引数で渡ってきた入力フォームの情報をエンティティに格納
     UserEntity userEntity = new UserEntity();
     userEntity.setName(userForm.getName());
@@ -92,7 +117,23 @@ public class UserController {
   @PostMapping("/users/{userId}")
   // @ModelAttributeはリクエストで送られてきた情報をJavaオブジェクトに設定するアノテーション
   // userはビュー側のフォームで呼び出すときの名前
-  public String updateUser(@PathVariable("userId") Integer userId, @ModelAttribute("user") UserEditForm userEditForm, Model model) {
+  // public String updateUser(@PathVariable("userId") Integer userId, @ModelAttribute("user") UserEditForm userEditForm, Model model) {
+  public String updateUser(@PathVariable("userId") Integer userId, @ModelAttribute("user") @Validated(ValidationOrder.class) UserEditForm userEditForm, BindingResult result, Model model) {
+    String newEmail = userEditForm.getEmail();
+    // 登録済みのメールアドレスがないか重複チェック
+    if (userRepository.existsByEmailExcludingCurrent(newEmail, userId)) {
+      result.rejectValue("email", "error.user", "Email already exists");
+    }
+    // バリデーションチェックエラーの場合、サインアップ画面のままでエラー内容を表示する
+    if (result.hasErrors()) {
+      List<String> errorMessages = result.getAllErrors().stream()
+                                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                                    .collect(Collectors.toList());
+      model.addAttribute("errorMessages", errorMessages);
+      model.addAttribute("user", userEditForm);
+      return "users/edit";
+    }
+    
     // 画面から送られてきた情報をセット
     UserEntity user = userRepository.findById(userId);
     user.setName(userEditForm.getName());
