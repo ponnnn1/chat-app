@@ -9,4 +9,5 @@ public class RoomEntity {
   private Integer id;
   private String name;
   private List<RoomUserEntity> roomUsers; //RoomUserEntityの情報にアクセスできるようにフィールドを追加
+  private List<MessageEntity> messages; //MessageEntityの情報にアクセスできるようにフィールドを追加
 }
