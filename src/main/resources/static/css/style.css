@@ -71,15 +71,25 @@
 }
 
 .header-button {
-  margin-top: 40px;
+  /* margin-top: 40px; */
+  margin-top: 20px;
 }
 
-.header-button a {
+/* .header-button a {
   padding: 20px;
   border: 1px solid darkred;
-  color: darkred;
+  color: darkred; */
   /* margin-top: 20px; */
+  /* text-decoration: none;
+} */
+
+.header-button input[type="submit"] {
   text-decoration: none;
+  border: 1px solid darkred;
+  color: darkred;
+  background-color: #fff;
+  padding: 20px;
+  cursor: pointer;
 }
 
 .messages {

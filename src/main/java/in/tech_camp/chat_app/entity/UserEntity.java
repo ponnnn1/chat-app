@@ -11,4 +11,5 @@ public class UserEntity {
   private String email;
   private String password;
   private List<RoomUserEntity> roomUsers; //RoomUserEntityの情報にアクセスできるようにフィールドを追加
+  private List<MessageEntity> messages; //MessageEntityの情報にアクセスできるようにフィールドを追加
 }
