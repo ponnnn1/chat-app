@@ -50,7 +50,12 @@ public class MessageController {
 
     // メッセージフォームの内容をビューに渡す
     model.addAttribute("messageForm", new MessageForm());
+
     model.addAttribute("roomId", roomId);
+
+    // ルームに投稿されたデータを取得にビューに渡す
+    List<MessageEntity> messages = messageRepository.findByRoomId(roomId);
+    model.addAttribute("messages", messages);
     return "messages/index";
   }
   // public String showMessages(){

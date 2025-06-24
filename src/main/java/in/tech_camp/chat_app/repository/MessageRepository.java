@@ -19,8 +19,8 @@ public interface MessageRepository {
   @Options(useGeneratedKeys = true, keyProperty = "id")
   void insert(MessageEntity messageEntity);
 
-  // 指定されたルームの全投稿情報を取得
-  @Select("SLECT * FROM messages WHERE room_id = #{roomId}")
+  // 指定されたルームの全投稿情報を取得（メッセージの表示）
+  @Select("SELECT * FROM messages WHERE room_id = #{roomId}")
   @Results(value = {
     @Result(property = "createdAt", column = "created_at"),
     @Result(property = "user", column = "user_id",

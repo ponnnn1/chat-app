@@ -21,15 +21,19 @@
       </div>
     </div>
     <div class="message">
-      <div class="upper-message">
-        <div class="message-user">Tom</div>
-        <div class="message-date">2025/6/19(Thurs) 12:10:30</div>
-      </div>
-      <div class="lower-message">
-        <div class="message-content">こんにちは</div>
+      <div th:each="message : ${messages}" class="message">
+        <div class="upper-message">
+          <div class="message-user" th:text="${message.user.name}">ユーザー名</div>
+          <div class="message-date" th:text="${message.createdAt}">日付</div>
+          <!-- <div class="message-user">Tom</div>
+          <div class="message-date">2025/6/19(Thurs) 12:10:30</div> -->
+        </div>
+        <div class="lower-message">
+          <div class="message-content" th:text="${message.content}">メッセージ内容</div>
+          <!-- <div class="message-content">こんにちは</div> -->
+        </div>
       </div>
     </div>
-   </div>
    <!-- <div class="form"> -->
   <form th:action="@{/rooms/{roomId}/messages(roomId=${roomId})}" method="post" th:object="${messageForm}" class="form">
     <div class="form-input">
