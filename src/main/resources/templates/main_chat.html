@@ -26,6 +26,7 @@
         <div class="upper-message">
           <div class="message-user" th:text="${message.user.name}">ユーザー名</div>
           <!-- <div class="message-date" th:text="${message.createdAt}">日付</div> -->
+           <!-- 投稿時刻の日本時間への修正 -->
            <div class="message-date" th:text="${#dates.format(message.createdAt, 'yyyy/MM/dd HH:mm:ss')}">日付</div>
           <!-- <div class="message-user">Tom</div>
           <div class="message-date">2025/6/19(Thurs) 12:10:30</div> -->
