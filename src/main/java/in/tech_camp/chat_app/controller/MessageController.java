@@ -51,7 +51,10 @@ public class MessageController {
     // メッセージフォームの内容をビューに渡す
     model.addAttribute("messageForm", new MessageForm());
 
-    model.addAttribute("roomId", roomId);
+    // ヘッダーのチャットルーム名表示のため、ルーム名をビューに渡す
+    RoomEntity room = roomRepository.findById(roomId);
+    model.addAttribute("room", room);
+    // model.addAttribute("roomId", roomId);
 
     // ルームに投稿されたデータを取得にビューに渡す
     List<MessageEntity> messages = messageRepository.findByRoomId(roomId);
