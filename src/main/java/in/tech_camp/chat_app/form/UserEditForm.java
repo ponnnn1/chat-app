@@ -10,7 +10,7 @@ import lombok.Data;
 public class UserEditForm {
   private Integer id;
 
-  @NotBlank(message = "Email can't be blank", groups = ValidationPriority1.class)
+  @NotBlank(message = "Name can't be blank", groups = ValidationPriority1.class)
   private String name;
 
   @NotBlank(message = "Email can't be blank", groups = ValidationPriority1.class)
