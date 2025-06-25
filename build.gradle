@@ -38,6 +38,12 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'  //追加　Spring Security
   implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'  //追加  Thymeleaf
 	implementation 'org.springframework.boot:spring-boot-starter-validation'  //追加  バリデーション
+	testImplementation 'org.springframework.security:spring-security-test'  //追加  テストで使用
+	testCompileOnly 'org.projectlombok:lombok'  //追加  テストで使用
+	testAnnotationProcessor 'org.projectlombok:lombok'  //追加  テストで使用
+	testImplementation 'com.h2database:h2'  //追加  テストで使用  h2
+	implementation 'org.yaml:snakeyaml:1.29'  //追加  テストで使用
+	implementation 'com.github.javafaker:javafaker:1.0.2'  //追加  テストで使用  Faker
 }
 
 tasks.named('test') {
