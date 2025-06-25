@@ -40,17 +40,25 @@
           <div class="message-content" th:text="${message.content}">メッセージ内容</div>
           <!-- <div class="message-content">こんにちは</div> -->
         </div>
+        <!-- チャット画面に画像を表示 -->
+        <div th:if="${message.image}">
+          <img th:src="@{${message.image}}" alt="メッセージ画像" style="width: 500px; height: 500px;"/>
+        </div>
       </div>
     </div>
    <!-- <div class="form"> -->
   <!-- <form th:action="@{/rooms/{roomId}/messages(roomId=${roomId})}" method="post" th:object="${messageForm}" class="form"> -->
-  <form th:action="@{/rooms/{roomId}/messages(roomId=${room.id})}" method="post" th:object="${messageForm}" class="form">
+  <!-- <form th:action="@{/rooms/{roomId}/messages(roomId=${room.id})}" method="post" th:object="${messageForm}" class="form"> -->
+  <!-- MultipartFileを用いた画像ファイルの管理 -->
+  <form th:action="@{/rooms/{roomId}/messages(roomId=${room.id})}" method="post" th:object="${messageForm}" class="form" enctype="multipart/form-data">
     <div class="form-input">
       <!-- <input class="form-message" placeholder= "type a message"> -->
       <input th:field="*{content}" class="form-message" placeholder= "type a message">
       <label class="form-image">
         <span class="image-file">画像</span>
-        <input type="file" class="hidden">
+        <!-- <input type="file" class="hidden"> -->
+        <!-- MessageFormに追加したimageを、画像送信のinput要素に紐づけ -->
+        <input type="file" th:field="*{image}" class="hidden">
       </label> 
     </div>
     <input class="form-submit" type="submit" value="送信">
