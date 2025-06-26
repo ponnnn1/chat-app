@@ -28,4 +28,9 @@ public interface MessageRepository {
             one = @One(select = "in.tech_camp.chat_app.repository.UserRepository.findById"))
   })
   List<MessageEntity> findByRoomId(Integer roomId);
+
+  // 結合テストコードで使用する、テーブル内のメッセージの数を取得するメソッド追加
+  // レコードの総数が変化するかを確認するために使用
+  @Select("SELECT COUNT(*) FROM messages")
+  int count();
 }
